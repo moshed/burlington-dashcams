@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Burlington Dash Cams — The Fesco Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   PASSWORD GATE
+   ============================================================ */
+.pw-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #1e2225;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+}
+.pw-gate.hidden { display: none; }
+.pw-box {
+  text-align: center;
+  max-width: 340px;
+  width: 100%;
+  padding: 2rem;
+}
+.pw-box h2 {
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+.pw-box h2 span { color: #DD1D1D; }
+.pw-box p {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+.pw-box input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #333;
+  border-radius: 4px;
+  background: #282b2f;
+  color: #fff;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.pw-box input:focus { border-color: #DD1D1D; }
+.pw-box .pw-err {
+  color: #DD1D1D;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.pw-box button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #DD1D1D;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  margin-top: 0.75rem;
+  transition: background 0.2s;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.pw-box button:hover { background: #c41919; }
+
+/* ============================================================
+   GLOBAL
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #1e2225;
+  --surface: #282b2f;
+  --text: #ffffff;
+  --body: #a0a0a0;
+  --accent: #DD1D1D;
+  --accent-dark: #b01717;
+  --font: 'Roboto', -apple-system, sans-serif;
+}
+
+html {
+  scroll-snap-type: y mandatory;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   PROGRESS BAR
+   ============================================================ */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  z-index: 1000;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+/* ============================================================
+   SLIDE COUNTER
+   ============================================================ */
+#slide-counter {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
+  color: #666;
+  z-index: 1000;
+  background: rgba(30,34,37,0.85);
+  backdrop-filter: blur(8px);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.06);
+  letter-spacing: 0.1em;
+}
+
+/* ============================================================
+   NAV DOTS
+   ============================================================ */
+#nav-dots {
+  position: fixed;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 1000;
+}
+#nav-dots .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+#nav-dots .dot.active {
+  background: var(--accent);
+  transform: scale(1.4);
+}
+
+/* ============================================================
+   BASE SLIDE
+   ============================================================ */
+.slide {
+  height: 100vh;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: flex;
+  position: relative;
+}
+
+/* ============================================================
+   TITLE SLIDE
+   ============================================================ */
+.slide-title {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+.slide-title .badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(0.65rem, 1vw, 0.8rem);
+  padding: 0.4rem 1.2rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease 0.2s;
+}
+.slide-title .main-title {
+  font-weight: 900;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: var(--text);
+  line-height: 1.05;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.7s ease 0.35s;
+}
+.slide-title .main-title span { color: var(--accent); }
+.slide-title .subtitle {
+  font-weight: 300;
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  color: var(--body);
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease 0.5s;
+}
+.slide-title .stats {
+  display: flex;
+  gap: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease 0.65s;
+}
+.slide-title .stat-num {
+  font-weight: 900;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--accent);
+  line-height: 1;
+}
+.slide-title .stat-label {
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
+  color: var(--body);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 0.3rem;
+  font-weight: 300;
+}
+.slide-title.in-view .badge,
+.slide-title.in-view .main-title,
+.slide-title.in-view .subtitle,
+.slide-title.in-view .stats {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   PRODUCT SLIDE
+   ============================================================ */
+.slide-product {
+  display: flex;
+}
+.slide-product .image-panel {
+  flex: 0 0 50%;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, var(--surface) 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+/* Red accent line on image panel edge */
+.slide-product .image-panel::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  bottom: 20%;
+  width: 3px;
+  background: var(--accent);
+}
+.slide-product.layout-left .image-panel::after { right: 0; }
+.slide-product.layout-right .image-panel::after { left: 0; }
+
+.slide-product .text-panel {
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 4vw, 4rem);
+  position: relative;
+}
+
+/* Layout */
+.slide-product.layout-left { flex-direction: row; }
+.slide-product.layout-right { flex-direction: row-reverse; }
+
+/* Product images */
+.slide-product .product-image {
+  max-width: 75%;
+  max-height: 65vh;
+  object-fit: contain;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: all 0.7s ease 0.3s;
+  filter: drop-shadow(0 0 25px rgba(255,255,255,0.12)) drop-shadow(0 0 60px rgba(255,255,255,0.06));
+}
+.slide-product.in-view .product-image {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Multi-image */
+.product-images.multi {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.product-images.multi img {
+  max-width: 45%;
+  max-height: 55vh;
+  object-fit: contain;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: all 0.7s ease 0.3s;
+  filter: drop-shadow(0 0 25px rgba(255,255,255,0.12)) drop-shadow(0 0 60px rgba(255,255,255,0.06));
+}
+.product-images.multi img:nth-child(2) { transition-delay: 0.45s; }
+.product-images.multi img:nth-child(3) { transition-delay: 0.55s; }
+.product-images.multi.triple img { max-width: 30%; max-height: 50vh; }
+.slide-product.in-view .product-images.multi img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* No-image placeholder */
+.no-image-placeholder {
+  width: 280px;
+  height: 280px;
+  border: 2px dashed rgba(255,255,255,0.12);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: all 0.7s ease 0.3s;
+}
+.no-image-placeholder svg { opacity: 0.2; }
+.no-image-placeholder span {
+  font-size: clamp(0.7rem, 1vw, 0.8rem);
+  color: #555;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+.slide-product.in-view .no-image-placeholder {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Text panel elements */
+.slide-product .sku-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: clamp(0.6rem, 0.9vw, 0.72rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 0.3rem 0.9rem;
+  border-radius: 2px;
+  width: fit-content;
+  margin-bottom: 1rem;
+  background: rgba(221,29,29,0.1);
+  color: var(--accent);
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.5s ease 0.2s;
+}
+.slide-product .product-name {
+  font-weight: 900;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease 0.3s;
+}
+.slide-product .features-list {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+.slide-product .features-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+  color: var(--body);
+  line-height: 1.5;
+  margin-bottom: 0.4rem;
+  font-weight: 300;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.4s ease;
+}
+.slide-product .features-list li .bullet {
+  width: 6px;
+  height: 6px;
+  min-width: 6px;
+  border-radius: 1px;
+  margin-top: 0.45rem;
+  background: var(--accent);
+}
+.slide-product .pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.5s ease 0.7s;
+}
+.slide-product .price-group {
+  display: flex;
+  flex-direction: column;
+}
+.slide-product .price-label {
+  font-size: clamp(0.55rem, 0.8vw, 0.65rem);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #555;
+  margin-bottom: 0.15rem;
+  font-weight: 400;
+}
+.slide-product .price-main {
+  font-weight: 900;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  color: var(--accent);
+  line-height: 1;
+}
+.slide-product .price-small {
+  font-weight: 500;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  color: #666;
+  line-height: 1;
+}
+.slide-product .margin-badge {
+  font-size: clamp(0.6rem, 0.8vw, 0.7rem);
+  font-weight: 700;
+  color: #4CAF50;
+  background: rgba(76,175,80,0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  letter-spacing: 1px;
+}
+
+/* In-view animations */
+.slide-product.in-view .sku-badge { opacity: 1; transform: translateY(0); }
+.slide-product.in-view .product-name { opacity: 1; transform: translateY(0); }
+.slide-product.in-view .features-list li { opacity: 1; transform: translateX(0); }
+.slide-product.in-view .features-list li:nth-child(1) { transition-delay: 0.35s; }
+.slide-product.in-view .features-list li:nth-child(2) { transition-delay: 0.4s; }
+.slide-product.in-view .features-list li:nth-child(3) { transition-delay: 0.45s; }
+.slide-product.in-view .features-list li:nth-child(4) { transition-delay: 0.5s; }
+.slide-product.in-view .features-list li:nth-child(5) { transition-delay: 0.55s; }
+.slide-product.in-view .features-list li:nth-child(6) { transition-delay: 0.6s; }
+.slide-product.in-view .features-list li:nth-child(7) { transition-delay: 0.65s; }
+.slide-product.in-view .pricing { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   STORY SLIDE — "Protect Your Side of the Story"
+   ============================================================ */
+.slide-story {
+  flex-direction: column;
+  overflow: hidden;
+}
+.slide-story .story-images {
+  display: flex;
+  flex: 0 0 50%;
+  width: 100%;
+  overflow: hidden;
+}
+.slide-story .story-img {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.slide-story .story-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: all 0.9s ease;
+}
+.slide-story.in-view .story-img img {
+  opacity: 1;
+  transform: scale(1);
+}
+.slide-story.in-view .story-img:nth-child(1) img { transition-delay: 0.1s; }
+.slide-story.in-view .story-img:nth-child(2) img { transition-delay: 0.25s; }
+.slide-story.in-view .story-img:nth-child(3) img { transition-delay: 0.4s; }
+.slide-story .story-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(30,34,37,0) 30%, rgba(30,34,37,0.85) 100%);
+  pointer-events: none;
+}
+.slide-story .story-img:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  z-index: 2;
+  opacity: 0.4;
+}
+.slide-story .story-text {
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(1.5rem, 3vw, 3rem) clamp(2rem, 5vw, 5rem);
+  background: var(--bg);
+  position: relative;
+}
+.slide-story .story-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 3px;
+  background: var(--accent);
+  opacity: 0;
+  transform: scaleX(0);
+  transition: all 0.6s ease 0.5s;
+}
+.slide-story.in-view .story-text::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+.slide-story .story-headline {
+  font-weight: 900;
+  font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: clamp(0.8rem, 2vh, 1.5rem);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all 0.6s ease 0.4s;
+}
+.slide-story .story-headline span { color: var(--accent); }
+.slide-story.in-view .story-headline {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-story .story-points {
+  display: flex;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  list-style: none;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.5s ease 0.65s;
+}
+.slide-story.in-view .story-points {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-story .story-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 200px;
+}
+.slide-story .story-point .point-icon {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  color: var(--accent);
+  line-height: 1;
+}
+.slide-story .story-point .point-text {
+  font-size: clamp(0.7rem, 1.1vw, 0.85rem);
+  color: var(--body);
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .slide-story .story-points { flex-direction: column; gap: 0.8rem; }
+  .slide-story .story-point { max-width: none; flex-direction: row; text-align: left; }
+}
+
+/* ============================================================
+   TITLE SLIDE LOGO
+   ============================================================ */
+.slide-title .cd-logo {
+  width: clamp(180px, 25vw, 320px);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease 0.1s;
+}
+.slide-title.in-view .cd-logo { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   BRAND SLIDE
+   ============================================================ */
+.slide-brand {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+.slide-brand .brand-header {
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all 0.6s ease 0.2s;
+}
+.slide-brand .brand-header .cd-logo-sm {
+  width: clamp(140px, 18vw, 220px);
+  margin-bottom: 0.8rem;
+}
+.slide-brand .brand-header h2 {
+  font-weight: 900;
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+.slide-brand .brand-header h2 span { color: var(--accent); }
+.slide-brand .brand-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2vw, 2rem);
+  max-width: 900px;
+  width: 100%;
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+}
+.slide-brand .brand-stat {
+  background: var(--surface);
+  border-radius: 4px;
+  padding: clamp(1rem, 2vh, 1.8rem) clamp(0.8rem, 1.5vw, 1.2rem);
+  border-top: 3px solid var(--accent);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+.slide-brand .brand-stat .stat-value {
+  font-weight: 900;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.slide-brand .brand-stat .stat-desc {
+  font-size: clamp(0.65rem, 1vw, 0.8rem);
+  color: var(--body);
+  line-height: 1.4;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.slide-brand .brand-media {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.5s ease 0.7s;
+}
+.slide-brand .brand-media span {
+  font-size: clamp(0.65rem, 0.9vw, 0.75rem);
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+.slide-brand .media-logos {
+  display: flex;
+  gap: clamp(1rem, 2vw, 2rem);
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.slide-brand .media-name {
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  font-weight: 700;
+  color: #666;
+  letter-spacing: 1px;
+}
+.slide-brand.in-view .brand-header { opacity: 1; transform: translateY(0); }
+.slide-brand.in-view .brand-stat { opacity: 1; transform: translateY(0); }
+.slide-brand.in-view .brand-stat:nth-child(1) { transition-delay: 0.3s; }
+.slide-brand.in-view .brand-stat:nth-child(2) { transition-delay: 0.4s; }
+.slide-brand.in-view .brand-stat:nth-child(3) { transition-delay: 0.5s; }
+.slide-brand.in-view .brand-stat:nth-child(4) { transition-delay: 0.55s; }
+.slide-brand.in-view .brand-stat:nth-child(5) { transition-delay: 0.6s; }
+.slide-brand.in-view .brand-stat:nth-child(6) { transition-delay: 0.65s; }
+.slide-brand.in-view .brand-media { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   END SLIDE
+   ============================================================ */
+.slide-end {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+.slide-end .end-accent {
+  width: 50px;
+  height: 3px;
+  background: var(--accent);
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: scaleX(0);
+  transition: all 0.6s ease 0.2s;
+}
+.slide-end .end-title {
+  font-weight: 900;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--text);
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all 0.6s ease 0.35s;
+}
+.slide-end .end-subtitle {
+  font-weight: 300;
+  font-size: clamp(0.9rem, 1.5vw, 1.15rem);
+  color: var(--body);
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.6s ease 0.5s;
+}
+.slide-end.in-view .end-accent { opacity: 1; transform: scaleX(1); }
+.slide-end.in-view .end-title,
+.slide-end.in-view .end-subtitle { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .slide-product { flex-direction: column !important; }
+  .slide-product .image-panel { flex: 0 0 40%; padding: 1rem; }
+  .slide-product .text-panel { flex: 0 0 60%; padding: 1.2rem 1.5rem; }
+  .slide-product .image-panel::after { display: none; }
+  .slide-product .product-image { max-height: 30vh; }
+  .product-images.multi img { max-height: 25vh; }
+  .no-image-placeholder { width: 150px; height: 150px; }
+  #nav-dots { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Password Gate -->
+<div class="pw-gate" id="pw-gate">
+  <div class="pw-box">
+    <h2>BURLINGTON <span>Dash Cams</span></h2>
+    <p>Enter password to view this presentation</p>
+    <input id="pw-input" type="password" placeholder="Password">
+    <div class="pw-err" id="pw-err">&nbsp;</div>
+    <button id="pw-btn">Enter</button>
+  </div>
+</div>
+<script>
+(function(){
+  var h='faf169b533cdcfa5bfe87e20e473027814f93ae4322d21311ebf4a5675a28664';
+  async function sha(s){var e=new TextEncoder().encode(s);var b=await crypto.subtle.digest('SHA-256',e);return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+  async function check(){
+    var v=document.getElementById('pw-input').value;
+    var d=await sha(v);
+    if(d===h){document.getElementById('pw-gate').classList.add('hidden');}
+    else{var err=document.getElementById('pw-err');err.textContent='Incorrect password';err.style.opacity='1';}
+  }
+  document.getElementById('pw-btn').addEventListener('click',check);
+  document.getElementById('pw-input').addEventListener('keydown',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+
+<!-- Progress bar -->
+<div id="progress-bar"></div>
+
+<!-- Slide counter -->
+<div id="slide-counter">1 / 10</div>
+
+<!-- Nav dots -->
+<div id="nav-dots"></div>
+
+<!-- ===== SLIDE 1: TITLE ===== -->
+<section class="slide slide-title" data-slide="0">
+  <img src="assets/cd-logo.png" alt="Car and Driver" class="cd-logo">
+  <div class="badge">The Fesco Group</div>
+  <h1 class="main-title">BURLINGTON <span>Dash Cams</span></h1>
+  <p class="subtitle">Product Lineup</p>
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Products</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 2: BRAND ===== -->
+<section class="slide slide-brand" data-slide="1">
+  <div class="brand-header">
+    <img src="assets/cd-logo.png" alt="Car and Driver" class="cd-logo-sm">
+    <h2>The First Name in <span>Automotive Expertise</span></h2>
+  </div>
+  <div class="brand-stats">
+    <div class="brand-stat">
+      <div class="stat-value">22M</div>
+      <div class="stat-desc">Brand Loyalists</div>
+    </div>
+    <div class="brand-stat">
+      <div class="stat-value">10M</div>
+      <div class="stat-desc">Monthly Digital Visitors</div>
+    </div>
+    <div class="brand-stat">
+      <div class="stat-value">7.7M+</div>
+      <div class="stat-desc">Print Readers</div>
+    </div>
+    <div class="brand-stat">
+      <div class="stat-value">4.7M</div>
+      <div class="stat-desc">Social Followers</div>
+    </div>
+    <div class="brand-stat">
+      <div class="stat-value">3B+</div>
+      <div class="stat-desc">PR Media Impressions</div>
+    </div>
+    <div class="brand-stat">
+      <div class="stat-value">#3</div>
+      <div class="stat-desc">Automotive Integrity Ranking</div>
+    </div>
+  </div>
+  <div class="brand-media">
+    <span>As Featured In</span>
+    <div class="media-logos">
+      <span class="media-name">Yahoo!</span>
+      <span class="media-name">Mashable</span>
+      <span class="media-name">BuzzFeed</span>
+      <span class="media-name">Tom's Guide</span>
+      <span class="media-name">Rolling Stone</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 3: PROTECT YOUR STORY ===== -->
+<section class="slide slide-story" data-slide="2">
+  <div class="story-images">
+    <div class="story-img">
+      <img src="assets/stock-dashcam.jpg" alt="Dashcam mounted on windshield">
+    </div>
+    <div class="story-img">
+      <img src="assets/stock-accident.jpg" alt="Car accident damage">
+    </div>
+    <div class="story-img">
+      <img src="assets/stock-night.jpg" alt="Night highway driving">
+    </div>
+  </div>
+  <div class="story-text">
+    <h2 class="story-headline">Protect Your <span>Side of the Story</span></h2>
+    <div class="story-points">
+      <div class="story-point">
+        <span class="point-icon">&#9679;</span>
+        <span class="point-text">HD video evidence for insurance claims &amp; disputes</span>
+      </div>
+      <div class="story-point">
+        <span class="point-icon">&#9679;</span>
+        <span class="point-text">24/7 recording with auto on/off ignition start</span>
+      </div>
+      <div class="story-point">
+        <span class="point-icon">&#9679;</span>
+        <span class="point-text">Compact, plug-and-play installation in minutes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 4: CDC573 ===== -->
+<section class="slide slide-product layout-right" data-slide="3">
+  <div class="image-panel">
+    <div class="product-images multi">
+      <img src="assets/nobg/image1.png" alt="CDC573 front">
+      <img src="assets/nobg/image2.png" alt="CDC573 back">
+    </div>
+  </div>
+  <div class="text-panel">
+    <div class="sku-badge">Dash Cam</div>
+    <h2 class="product-name">CDC573</h2>
+    <ul class="features-list">
+      <li><span class="bullet"></span>High definition video recording</li>
+      <li><span class="bullet"></span>Compact plug-and-play design</li>
+      <li><span class="bullet"></span>Loop recording</li>
+      <li><span class="bullet"></span>Auto on/off with car ignition</li>
+      <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
+    </ul>
+    <div class="pricing">
+      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$15.00</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 5: CDC560 ===== -->
+<section class="slide slide-product layout-left" data-slide="4">
+  <div class="image-panel">
+    <div class="product-images multi">
+      <img src="assets/nobg/image9.png" alt="CDC560 front and back">
+      <img src="assets/nobg/image8.png" alt="CDC560 mounted">
+    </div>
+  </div>
+  <div class="text-panel">
+    <div class="sku-badge">Dash Cam</div>
+    <h2 class="product-name">CDC560</h2>
+    <ul class="features-list">
+      <li><span class="bullet"></span>High definition video recording</li>
+      <li><span class="bullet"></span>Compact plug-and-play design</li>
+      <li><span class="bullet"></span>Loop recording</li>
+      <li><span class="bullet"></span>Auto on/off with car ignition</li>
+      <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
+    </ul>
+    <div class="pricing">
+      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$16.00</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 6: CDC570 ===== -->
+<section class="slide slide-product layout-right" data-slide="5">
+  <div class="image-panel">
+    <img src="assets/nobg/image10.png" alt="CDC570" class="product-image">
+  </div>
+  <div class="text-panel">
+    <div class="sku-badge">Dash Cam</div>
+    <h2 class="product-name">CDC570</h2>
+    <ul class="features-list">
+      <li><span class="bullet"></span>High definition video recording</li>
+      <li><span class="bullet"></span>Compact plug-and-play design</li>
+      <li><span class="bullet"></span>Loop recording</li>
+      <li><span class="bullet"></span>Auto on/off with car ignition</li>
+      <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
+    </ul>
+    <div class="pricing">
+      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$14.50</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 7: CDC599 ===== -->
+<section class="slide slide-product layout-left" data-slide="6">
+  <div class="image-panel">
+    <div class="product-images multi triple">
+      <img src="assets/nobg/image4.png" alt="CDC599 front">
+      <img src="assets/nobg/image5.png" alt="CDC599 mounted">
+      <img src="assets/nobg/image6.png" alt="CDC599 side">
+    </div>
+  </div>
+  <div class="text-panel">
+    <div class="sku-badge">Dash Cam</div>
+    <h2 class="product-name">CDC599</h2>
+    <ul class="features-list">
+      <li><span class="bullet"></span>High definition video recording</li>
+      <li><span class="bullet"></span>Foldable for low profile</li>
+      <li><span class="bullet"></span>Rotatable for easy viewing</li>
+      <li><span class="bullet"></span>Compact plug-and-play design</li>
+      <li><span class="bullet"></span>Loop recording</li>
+      <li><span class="bullet"></span>Auto on/off with car ignition</li>
+      <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
+    </ul>
+    <div class="pricing">
+      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$16.00</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 8: CDC571 ===== -->
+<section class="slide slide-product layout-right" data-slide="7">
+  <div class="image-panel">
+    <div class="product-images multi">
+      <img src="assets/nobg/image3.png" alt="CDC571 front">
+      <img src="assets/nobg/image11.png" alt="CDC571 mounted">
+    </div>
+  </div>
+  <div class="text-panel">
+    <div class="sku-badge">Dash Cam</div>
+    <h2 class="product-name">CDC571</h2>
+    <ul class="features-list">
+      <li><span class="bullet"></span>High definition video recording</li>
+      <li><span class="bullet"></span>Compact plug-and-play design</li>
+      <li><span class="bullet"></span>Loop recording</li>
+      <li><span class="bullet"></span>Auto on/off with car ignition</li>
+      <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
+    </ul>
+    <div class="pricing">
+      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$14.00</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 9: CDC572 ===== -->
+<section class="slide slide-product layout-left" data-slide="8">
+  <div class="image-panel">
+    <img src="assets/nobg/image7.png" alt="CDC572" class="product-image">
+  </div>
+  <div class="text-panel">
+    <div class="sku-badge">Dash Cam</div>
+    <h2 class="product-name">CDC572</h2>
+    <ul class="features-list">
+      <li><span class="bullet"></span>High definition video recording</li>
+      <li><span class="bullet"></span>Compact plug-and-play design</li>
+      <li><span class="bullet"></span>Loop recording</li>
+      <li><span class="bullet"></span>Auto on/off with car ignition</li>
+      <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
+    </ul>
+    <div class="pricing">
+      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$14.00</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 10: END ===== -->
+<section class="slide slide-end" data-slide="9">
+  <div class="end-accent"></div>
+  <h2 class="end-title">Thank You</h2>
+  <p class="end-subtitle">The Fesco Group &mdash; Burlington Dash Cams</p>
+</section>
+
+<script>
+(function() {
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  const progressBar = document.getElementById('progress-bar');
+  const slideCounter = document.getElementById('slide-counter');
+  const navDotsContainer = document.getElementById('nav-dots');
+
+  slides.forEach((slide, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.addEventListener('click', () => slides[i].scrollIntoView({ behavior: 'smooth' }));
+    navDotsContainer.appendChild(dot);
+  });
+  const dots = navDotsContainer.querySelectorAll('.dot');
+
+  let currentSlide = 0;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        const idx = parseInt(entry.target.dataset.slide);
+        if (!isNaN(idx)) {
+          currentSlide = idx;
+          updateUI(idx);
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(slide => observer.observe(slide));
+
+  function updateUI(idx) {
+    progressBar.style.width = ((idx + 1) / totalSlides * 100) + '%';
+    slideCounter.textContent = (idx + 1) + ' / ' + totalSlides;
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  document.addEventListener('keydown', (e) => {
+    let target = currentSlide;
+    switch(e.key) {
+      case 'ArrowDown': case 'ArrowRight': case ' ': case 'PageDown':
+        e.preventDefault(); target = Math.min(currentSlide + 1, totalSlides - 1); break;
+      case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+        e.preventDefault(); target = Math.max(currentSlide - 1, 0); break;
+      case 'Home': e.preventDefault(); target = 0; break;
+      case 'End': e.preventDefault(); target = totalSlides - 1; break;
+      default: return;
+    }
+    slides[target].scrollIntoView({ behavior: 'smooth' });
+  });
+
+  let touchStartY = 0, touchStartX = 0;
+  document.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    const dy = touchStartY - e.changedTouches[0].clientY;
+    const dx = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(dy) > 50 && Math.abs(dy) > Math.abs(dx)) {
+      const target = dy > 0
+        ? Math.min(currentSlide + 1, totalSlides - 1)
+        : Math.max(currentSlide - 1, 0);
+      slides[target].scrollIntoView({ behavior: 'smooth' });
+    }
+  }, { passive: true });
+
+  updateUI(0);
+  slides[0].classList.add('in-view');
+})();
+</script>
+
+</body>
+</html>

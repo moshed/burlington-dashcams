@@ -1,0 +1,90 @@
+{
+  "0": {
+    "x": 111,
+    "y": 185,
+    "scale": 1.2850000000000001,
+    "src": "assets/nobg/image1.png",
+    "tx": 111,
+    "ty": 185
+  },
+  "1": {
+    "x": -117,
+    "y": -144,
+    "scale": 2.185,
+    "src": "assets/nobg/image2.png",
+    "tx": -117,
+    "ty": -144
+  },
+  "2": {
+    "x": 108,
+    "y": -190,
+    "scale": 1.9700000000000004,
+    "src": "assets/nobg/image9.png",
+    "tx": 108,
+    "ty": -190
+  },
+  "3": {
+    "x": -111,
+    "y": 121,
+    "scale": 1.3,
+    "src": "assets/nobg/image8.png",
+    "tx": -111,
+    "ty": 121
+  },
+  "4": {
+    "x": -13,
+    "y": -84,
+    "scale": 1.16,
+    "src": "assets/nobg/image10.png",
+    "tx": -13,
+    "ty": -84
+  },
+  "5": {
+    "x": 182,
+    "y": 78,
+    "scale": 2.395,
+    "src": "assets/nobg/image4.png",
+    "tx": 182,
+    "ty": 78
+  },
+  "6": {
+    "x": -108,
+    "y": -240,
+    "scale": 1.62,
+    "src": "assets/nobg/image5.png",
+    "tx": -108,
+    "ty": -240
+  },
+  "7": {
+    "x": -43,
+    "y": -243,
+    "scale": 1.4,
+    "src": "assets/nobg/image6.png",
+    "tx": -43,
+    "ty": -243
+  },
+  "8": {
+    "x": 110,
+    "y": -241,
+    "scale": 1.8050000000000002,
+    "src": "assets/nobg/image3.png",
+    "tx": 110,
+    "ty": -241
+  },
+  "9": {
+    "x": -125,
+    "y": 161,
+    "scale": 0.7849999999999997,
+    "src": "assets/nobg/image11.png",
+    "tx": -125,
+    "ty": 161
+  },
+  "10": {
+    "x": 21,
+    "y": -19,
+    "scale": 1.2399999999999993,
+    "src": "assets/nobg/image7.png",
+    "tx": 21,
+    "ty": -19
+  }
+}
