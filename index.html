@@ -328,6 +328,29 @@ body {
 .product-images.multi img:nth-child(2) { transition-delay: 0.45s; }
 .product-images.multi img:nth-child(3) { transition-delay: 0.55s; }
 .product-images.multi.triple img { max-width: 30%; max-height: 50vh; }
+.product-images.multi.quad { gap: 0.5rem; }
+.product-images.multi.quad img { max-width: 23%; max-height: 45vh; }
+.product-images.multi.quad .img-label-wrap { max-width: 23%; }
+
+/* Packaging label above image */
+.img-label-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 30%;
+}
+.img-label-wrap img {
+  max-width: 100% !important;
+}
+.img-label {
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--body);
+  margin-bottom: 0.3rem;
+  white-space: nowrap;
+}
 .slide-product.in-view .product-images.multi img {
   opacity: 1;
   transform: scale(1);
@@ -445,9 +468,9 @@ body {
   line-height: 1;
 }
 .slide-product .price-small {
-  font-weight: 500;
-  font-size: clamp(0.85rem, 1.2vw, 1rem);
-  color: #666;
+  font-weight: 900;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  color: #2558B0;
   line-height: 1;
 }
 .slide-product .margin-badge {
@@ -901,9 +924,13 @@ body {
 <!-- ===== SLIDE 4: CDC573 ===== -->
 <section class="slide slide-product layout-right" data-slide="3">
   <div class="image-panel">
-    <div class="product-images multi">
+    <div class="product-images multi triple">
       <img src="assets/nobg/image1.png" alt="CDC573 front">
       <img src="assets/nobg/image2.png" alt="CDC573 back">
+      <div class="img-label-wrap">
+        <span class="img-label">Packaging</span>
+        <img src="assets/nobg/image12.png" alt="CDC573 packaging">
+      </div>
     </div>
   </div>
   <div class="text-panel">
@@ -917,7 +944,8 @@ body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$15.00</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$15.00</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$10.50</span></div>
     </div>
   </div>
 </section>
@@ -925,9 +953,13 @@ body {
 <!-- ===== SLIDE 5: CDC560 ===== -->
 <section class="slide slide-product layout-left" data-slide="4">
   <div class="image-panel">
-    <div class="product-images multi">
+    <div class="product-images multi triple">
       <img src="assets/nobg/image9.png" alt="CDC560 front and back">
       <img src="assets/nobg/image8.png" alt="CDC560 mounted">
+      <div class="img-label-wrap">
+        <span class="img-label">Packaging</span>
+        <img src="assets/nobg/image12.png" alt="CDC560 packaging">
+      </div>
     </div>
   </div>
   <div class="text-panel">
@@ -941,7 +973,8 @@ body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$16.00</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$16.00</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$12.15</span></div>
     </div>
   </div>
 </section>
@@ -949,7 +982,13 @@ body {
 <!-- ===== SLIDE 6: CDC570 ===== -->
 <section class="slide slide-product layout-right" data-slide="5">
   <div class="image-panel">
-    <img src="assets/nobg/image10.png" alt="CDC570" class="product-image">
+    <div class="product-images multi">
+      <img src="assets/nobg/image10.png" alt="CDC570">
+      <div class="img-label-wrap">
+        <span class="img-label">Packaging</span>
+        <img src="assets/nobg/image12.png" alt="CDC570 packaging">
+      </div>
+    </div>
   </div>
   <div class="text-panel">
     <div class="sku-badge">Dash Cam</div>
@@ -962,7 +1001,8 @@ body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$14.50</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$14.50</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$9.99</span></div>
     </div>
   </div>
 </section>
@@ -970,10 +1010,14 @@ body {
 <!-- ===== SLIDE 7: CDC599 ===== -->
 <section class="slide slide-product layout-left" data-slide="6">
   <div class="image-panel">
-    <div class="product-images multi triple">
+    <div class="product-images multi quad">
       <img src="assets/nobg/image4.png" alt="CDC599 front">
       <img src="assets/nobg/image5.png" alt="CDC599 mounted">
       <img src="assets/nobg/image6.png" alt="CDC599 side">
+      <div class="img-label-wrap">
+        <span class="img-label">Packaging</span>
+        <img src="assets/nobg/image12.png" alt="CDC599 packaging">
+      </div>
     </div>
   </div>
   <div class="text-panel">
@@ -989,7 +1033,8 @@ body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$16.00</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$16.00</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$12.00</span></div>
     </div>
   </div>
 </section>
@@ -997,9 +1042,13 @@ body {
 <!-- ===== SLIDE 8: CDC571 ===== -->
 <section class="slide slide-product layout-right" data-slide="7">
   <div class="image-panel">
-    <div class="product-images multi">
+    <div class="product-images multi triple">
       <img src="assets/nobg/image3.png" alt="CDC571 front">
       <img src="assets/nobg/image11.png" alt="CDC571 mounted">
+      <div class="img-label-wrap">
+        <span class="img-label">Packaging</span>
+        <img src="assets/nobg/image12.png" alt="CDC571 packaging">
+      </div>
     </div>
   </div>
   <div class="text-panel">
@@ -1013,7 +1062,8 @@ body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$14.00</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$14.00</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$9.99</span></div>
     </div>
   </div>
 </section>
@@ -1021,7 +1071,13 @@ body {
 <!-- ===== SLIDE 9: CDC572 ===== -->
 <section class="slide slide-product layout-left" data-slide="8">
   <div class="image-panel">
-    <img src="assets/nobg/image7.png" alt="CDC572" class="product-image">
+    <div class="product-images multi">
+      <img src="assets/nobg/image7.png" alt="CDC572">
+      <div class="img-label-wrap">
+        <span class="img-label">Packaging</span>
+        <img src="assets/nobg/image12.png" alt="CDC572 packaging">
+      </div>
+    </div>
   </div>
   <div class="text-panel">
     <div class="sku-badge">Dash Cam</div>
@@ -1034,7 +1090,8 @@ body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$14.00</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$14.00</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$9.99</span></div>
     </div>
   </div>
 </section>

@@ -301,9 +301,9 @@ html, body {
   line-height: 1;
 }
 .page-product .price-small {
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: #666;
+  font-weight: 900;
+  font-size: 2rem;
+  color: #2558B0;
   line-height: 1;
 }
 .page-product .margin-badge {
@@ -619,6 +619,27 @@ html, body {
 .product-images.multi.triple .img-wrapper img {
   max-height: 4in;
 }
+.product-images.multi.quad .img-wrapper {
+  max-width: 23%;
+}
+.product-images.multi.quad .img-wrapper img {
+  max-height: 3.5in;
+}
+
+/* Packaging label above image */
+.img-label {
+  position: absolute;
+  top: -1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--body);
+  white-space: nowrap;
+  pointer-events: none;
+}
 
 /* Resize handle — bottom-right triangle */
 .resize-handle {
@@ -771,7 +792,7 @@ html, body {
 <!-- ===== PAGE 4: CDC573 — layout-right (image left, text right) ===== -->
 <div class="page page-product layout-right" data-product="CDC573">
   <div class="image-panel">
-    <div class="product-images multi">
+    <div class="product-images multi triple">
       <div class="img-wrapper" data-img-id="cdc573-0">
         <img src="assets/nobg/image1.png" alt="CDC573 front" class="product-image">
         <div class="resize-handle"></div>
@@ -779,6 +800,12 @@ html, body {
       </div>
       <div class="img-wrapper" data-img-id="cdc573-1">
         <img src="assets/nobg/image2.png" alt="CDC573 side" class="product-image">
+        <div class="resize-handle"></div>
+        <div class="size-label">100%</div>
+      </div>
+      <div class="img-wrapper" data-img-id="cdc573-2">
+        <div class="img-label">Packaging</div>
+        <img src="assets/nobg/image12.png" alt="CDC573 packaging" class="product-image">
         <div class="resize-handle"></div>
         <div class="size-label">100%</div>
       </div>
@@ -795,7 +822,8 @@ html, body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$15.00</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$15.00</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$10.50</span></div>
     </div>
   </div>
 </div>
@@ -803,7 +831,7 @@ html, body {
 <!-- ===== PAGE 5: CDC560 — layout-left (text left, image right) ===== -->
 <div class="page page-product layout-left" data-product="CDC560">
   <div class="image-panel">
-    <div class="product-images multi">
+    <div class="product-images multi triple">
       <div class="img-wrapper" data-img-id="cdc560-0">
         <img src="assets/nobg/image9.png" alt="CDC560 front and back" class="product-image">
         <div class="resize-handle"></div>
@@ -811,6 +839,12 @@ html, body {
       </div>
       <div class="img-wrapper" data-img-id="cdc560-1">
         <img src="assets/nobg/image8.png" alt="CDC560 mounted" class="product-image">
+        <div class="resize-handle"></div>
+        <div class="size-label">100%</div>
+      </div>
+      <div class="img-wrapper" data-img-id="cdc560-2">
+        <div class="img-label">Packaging</div>
+        <img src="assets/nobg/image12.png" alt="CDC560 packaging" class="product-image">
         <div class="resize-handle"></div>
         <div class="size-label">100%</div>
       </div>
@@ -827,7 +861,8 @@ html, body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$16.00</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$16.00</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$12.15</span></div>
     </div>
   </div>
 </div>
@@ -835,10 +870,18 @@ html, body {
 <!-- ===== PAGE 6: CDC570 — layout-right ===== -->
 <div class="page page-product layout-right" data-product="CDC570">
   <div class="image-panel">
-    <div class="img-wrapper" data-img-id="cdc570">
-      <img src="assets/nobg/image10.png" alt="CDC570" class="product-image">
-      <div class="resize-handle"></div>
-      <div class="size-label">100%</div>
+    <div class="product-images multi">
+      <div class="img-wrapper" data-img-id="cdc570-0">
+        <img src="assets/nobg/image10.png" alt="CDC570" class="product-image">
+        <div class="resize-handle"></div>
+        <div class="size-label">100%</div>
+      </div>
+      <div class="img-wrapper" data-img-id="cdc570-1">
+        <div class="img-label">Packaging</div>
+        <img src="assets/nobg/image12.png" alt="CDC570 packaging" class="product-image">
+        <div class="resize-handle"></div>
+        <div class="size-label">100%</div>
+      </div>
     </div>
   </div>
   <div class="text-panel">
@@ -852,7 +895,8 @@ html, body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$14.50</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$14.50</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$9.99</span></div>
     </div>
   </div>
 </div>
@@ -860,7 +904,7 @@ html, body {
 <!-- ===== PAGE 7: CDC599 — layout-left ===== -->
 <div class="page page-product layout-left" data-product="CDC599">
   <div class="image-panel">
-    <div class="product-images multi triple">
+    <div class="product-images multi quad">
       <div class="img-wrapper" data-img-id="cdc599-0">
         <img src="assets/nobg/image4.png" alt="CDC599 front" class="product-image">
         <div class="resize-handle"></div>
@@ -873,6 +917,12 @@ html, body {
       </div>
       <div class="img-wrapper" data-img-id="cdc599-2">
         <img src="assets/nobg/image6.png" alt="CDC599 side" class="product-image">
+        <div class="resize-handle"></div>
+        <div class="size-label">100%</div>
+      </div>
+      <div class="img-wrapper" data-img-id="cdc599-3">
+        <div class="img-label">Packaging</div>
+        <img src="assets/nobg/image12.png" alt="CDC599 packaging" class="product-image">
         <div class="resize-handle"></div>
         <div class="size-label">100%</div>
       </div>
@@ -891,7 +941,8 @@ html, body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$16.00</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$16.00</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$12.00</span></div>
     </div>
   </div>
 </div>
@@ -899,7 +950,7 @@ html, body {
 <!-- ===== PAGE 8: CDC571 — layout-right ===== -->
 <div class="page page-product layout-right" data-product="CDC571">
   <div class="image-panel">
-    <div class="product-images multi">
+    <div class="product-images multi triple">
       <div class="img-wrapper" data-img-id="cdc571-0">
         <img src="assets/nobg/image3.png" alt="CDC571 front" class="product-image">
         <div class="resize-handle"></div>
@@ -907,6 +958,12 @@ html, body {
       </div>
       <div class="img-wrapper" data-img-id="cdc571-1">
         <img src="assets/nobg/image11.png" alt="CDC571 mounted" class="product-image">
+        <div class="resize-handle"></div>
+        <div class="size-label">100%</div>
+      </div>
+      <div class="img-wrapper" data-img-id="cdc571-2">
+        <div class="img-label">Packaging</div>
+        <img src="assets/nobg/image12.png" alt="CDC571 packaging" class="product-image">
         <div class="resize-handle"></div>
         <div class="size-label">100%</div>
       </div>
@@ -923,7 +980,8 @@ html, body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$14.00</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$14.00</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$9.99</span></div>
     </div>
   </div>
 </div>
@@ -931,10 +989,18 @@ html, body {
 <!-- ===== PAGE 9: CDC572 — layout-left ===== -->
 <div class="page page-product layout-left" data-product="CDC572">
   <div class="image-panel">
-    <div class="img-wrapper" data-img-id="cdc572">
-      <img src="assets/nobg/image7.png" alt="CDC572" class="product-image">
-      <div class="resize-handle"></div>
-      <div class="size-label">100%</div>
+    <div class="product-images multi">
+      <div class="img-wrapper" data-img-id="cdc572-0">
+        <img src="assets/nobg/image7.png" alt="CDC572" class="product-image">
+        <div class="resize-handle"></div>
+        <div class="size-label">100%</div>
+      </div>
+      <div class="img-wrapper" data-img-id="cdc572-1">
+        <div class="img-label">Packaging</div>
+        <img src="assets/nobg/image12.png" alt="CDC572 packaging" class="product-image">
+        <div class="resize-handle"></div>
+        <div class="size-label">100%</div>
+      </div>
     </div>
   </div>
   <div class="text-panel">
@@ -948,7 +1014,8 @@ html, body {
       <li><span class="bullet"></span>8 GB memory card included, expandable up to 32 GB</li>
     </ul>
     <div class="pricing">
-      <div class="price-group"><span class="price-label">Sell</span><span class="price-main">$14.00</span></div>
+      <div class="price-group"><span class="price-label">With Card</span><span class="price-main">$14.00</span></div>
+      <div class="price-group"><span class="price-label">No Card</span><span class="price-small">$9.99</span></div>
     </div>
   </div>
 </div>
@@ -959,6 +1026,33 @@ html, body {
   <h2 class="end-title">Thank You</h2>
   <p class="end-subtitle">The Fesco Group &mdash; Burlington Dash Cams</p>
 </div>
+
+<!-- ============================================================
+     EMBEDDED LAYOUT DATA
+     Stores image positions/scales within the HTML itself.
+     Updated when "Save Layout" is clicked.
+     ============================================================ -->
+<script id="embedded-layout" type="application/json">
+{
+  "cdc573-0": { "x": 77, "y": 189, "scale": 2.25 },
+  "cdc573-1": { "x": -3, "y": -167, "scale": 3.25 },
+  "cdc573-2": { "x": 17, "y": 296, "scale": 1 },
+  "cdc560-0": { "x": 140, "y": -193, "scale": 3.265 },
+  "cdc560-1": { "x": -95, "y": 133, "scale": 1.56 },
+  "cdc560-2": { "x": 17, "y": 290, "scale": 1.035 },
+  "cdc570-0": { "x": 123, "y": -124, "scale": 2.12 },
+  "cdc570-1": { "x": 43, "y": 283, "scale": 0.57 },
+  "cdc599-0": { "x": 176, "y": -148, "scale": 5.05 },
+  "cdc599-1": { "x": -78, "y": 273, "scale": 1.62 },
+  "cdc599-2": { "x": -32, "y": 283, "scale": 1.655 },
+  "cdc599-3": { "x": 18, "y": 317, "scale": 1 },
+  "cdc571-0": { "x": 160, "y": -177, "scale": 2.665 },
+  "cdc571-1": { "x": -112, "y": 259, "scale": 0.785 },
+  "cdc571-2": { "x": -17, "y": 282, "scale": 1 },
+  "cdc572-0": { "x": 139, "y": -51, "scale": 2.63 },
+  "cdc572-1": { "x": 61, "y": 293, "scale": 0.59 }
+}
+</script>
 
 <!-- ============================================================
      EDITOR TOOLBAR
@@ -1005,8 +1099,24 @@ html, body {
     }
   } catch (e) {}
 
-  // ---- Load from localStorage ----
+  // ---- Load layout: embedded HTML data first, then localStorage overrides ----
   function loadLayout() {
+    // 1. Load from embedded layout data in the HTML (the "saved" baseline)
+    try {
+      const embeddedEl = document.getElementById('embedded-layout');
+      if (embeddedEl && embeddedEl.textContent.trim()) {
+        const embedded = JSON.parse(embeddedEl.textContent);
+        Object.keys(embedded).forEach(id => {
+          if (layoutState[id] !== undefined) {
+            layoutState[id] = { ...layoutState[id], ...embedded[id] };
+          }
+        });
+      }
+    } catch (e) {
+      console.warn('Failed to load embedded layout:', e);
+    }
+
+    // 2. Overlay with localStorage (takes priority — reflects latest in-browser edits)
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
@@ -1018,7 +1128,7 @@ html, body {
         });
       }
     } catch (e) {
-      console.warn('Failed to load layout:', e);
+      console.warn('Failed to load localStorage layout:', e);
     }
   }
 
@@ -1059,55 +1169,17 @@ html, body {
     });
   });
 
-  // ---- Save Layout (File System Access API) ----
-  // Build export with src paths for Playwright
-  function buildExportData() {
-    const exportData = {};
-    wrappers.forEach((w, i) => {
-      const id = w.dataset.imgId;
-      const img = w.querySelector('img');
-      const src = img ? img.getAttribute('src') : '';
-      exportData[i] = { ...layoutState[id], src, tx: layoutState[id].x, ty: layoutState[id].y };
-    });
-    return exportData;
-  }
-
+  // ---- Save Layout (localStorage + clipboard) ----
   const btnSave = document.getElementById('btnSaveLayout');
-  btnSave.addEventListener('click', async () => {
+  btnSave.addEventListener('click', () => {
     saveToLocalStorage();
-    const json = JSON.stringify(buildExportData(), null, 2);
-
-    if (window.showSaveFilePicker) {
-      try {
-        const handle = await window.showSaveFilePicker({
-          suggestedName: 'layout.json',
-          types: [{
-            description: 'JSON file',
-            accept: { 'application/json': ['.json'] }
-          }]
-        });
-        const writable = await handle.createWritable();
-        await writable.write(json);
-        await writable.close();
-        flashButton(btnSave, 'Saved!');
-        return;
-      } catch (e) {
-        if (e.name === 'AbortError') return; // user cancelled
-        // Fall through to download
-      }
-    }
-
-    // Fallback: download
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'layout.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    flashButton(btnSave, 'Downloaded!');
+    // Copy layout JSON to clipboard so it can be pasted when needed
+    const json = JSON.stringify(layoutState, null, 2);
+    navigator.clipboard.writeText(json).then(() => {
+      flashButton(btnSave, 'Saved & Copied!');
+    }).catch(() => {
+      flashButton(btnSave, 'Saved!');
+    });
   });
 
   function flashButton(btn, msg) {
